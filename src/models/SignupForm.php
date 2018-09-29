@@ -1,8 +1,9 @@
 <?php
 
-namespace app\models\form;
+namespace floor12\user\models;
 
-use app\models\User;
+use floor12\user\logic\UserRegister;
+use Yii;
 use yii\base\Model;
 
 /**
@@ -12,6 +13,7 @@ class SignupForm extends Model
 {
     public $fullname;
     public $email;
+    public $phone;
     public $password;
 
 
@@ -28,10 +30,21 @@ class SignupForm extends Model
             ['email', 'required'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
+            ['email', 'unique', 'targetClass' => User::class, 'message' => 'This email address has already been taken.'],
+            ['phone', 'unique', 'targetClass' => User::class, 'message' => 'This phone address has already been taken.'],
 
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
+        ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'fullname' => Yii::t('app.f12.user', 'Name'),
+            'email' => Yii::t('app.f12.user', 'Email'),
+            'phone' => Yii::t('app.f12.user', 'Phone'),
+            'password' => Yii::t('app.f12.user', 'Password'),
         ];
     }
 
@@ -45,13 +58,17 @@ class SignupForm extends Model
         if (!$this->validate()) {
             return null;
         }
-
-        $user = new User();
-        $user->fullname = $this->fullname;
-        $user->email = $this->email;
-        $user->setPassword($this->password);
-        $user->generateAuthKey();
-
-        return $user->save() ? $user : null;
+        $model = new User();
+        if (Yii::createObject(UserRegister::class, [
+            $model,
+            [
+                'fullname' => $this->fullname,
+                'email' => $this->email,
+                'phone' => $this->phone,
+                'password' => $this->password,
+            ]
+        ]))
+            return $model;
+        return false;
     }
 }

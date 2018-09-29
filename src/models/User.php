@@ -23,12 +23,16 @@ use yii\web\IdentityInterface;
  */
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
+    const SCENARIO_REGISTER = 'register';
+
+    public $password;
+
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'user';
+        return '{{%user}}';
     }
 
     /**
@@ -37,16 +41,18 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['fullname', 'password_hash', 'email', 'phone', 'created', 'updated'], 'required'],
-            [['phone', 'status', 'created', 'updated'], 'integer'],
-            [['fullname', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
+            [['fullname', 'email', 'phone', 'created', 'updated'], 'required'],
+            [['status', 'created', 'updated'], 'integer'],
+            [['fullname', 'email', 'password'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             [['password_reset_token'], 'unique'],
-            [['email'], 'unique'],
-            [['phone'], 'unique'],
+            ['email', 'email'],
+            ['email', 'unique', 'targetClass' => self::class, 'message' => 'This email address has already been taken.'],
             ['status', 'default', 'value' => UserStatus::STATUS_ACTIVE],
             ['status', 'in', 'range' => [UserStatus::STATUS_ACTIVE, UserStatus::STATUS_DISABLED]],
             ['phone', PhoneValidator::class],
+            ['phone', 'unique', 'targetClass' => self::class, 'message' => 'This phone address has already been taken.'],
+            ['password', 'required', 'on' => self::SCENARIO_REGISTER]
         ];
     }
 
@@ -57,15 +63,13 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             'id' => 'ID',
-            'fullname' => 'Полное имя',
-            'auth_key' => 'Ключ авторизации',
-            'password_hash' => 'Хеш пароля',
-            'password_reset_token' => 'Токен для сброса пароля',
-            'email' => 'Email',
-            'phone' => 'Телефон',
-            'status' => 'Статус',
-            'created' => 'Создан',
-            'updated' => 'Обновлен',
+            'fullname' => Yii::t('app.f12.user', 'Name'),
+            'email' => Yii::t('app.f12.user', 'Email'),
+            'phone' => Yii::t('app.f12.user', 'Phone'),
+            'password' => Yii::t('app.f12.user', 'Password'),
+            'status' => Yii::t('app.f12.user', 'Status'),
+            'created' => Yii::t('app.f12.user', 'Created'),
+            'updated' => Yii::t('app.f12.user', 'Updated'),
         ];
     }
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace app\models\form;
+namespace floor12\user\models;
 
-use app\models\query\UserQuery;
 use app\models\User;
+use Yii;
 use yii\base\InvalidParamException;
 use yii\base\Model;
 
@@ -30,11 +30,11 @@ class ResetPasswordForm extends Model
     public function __construct($token, $config = [])
     {
         if (empty($token) || !is_string($token)) {
-            throw new InvalidParamException('Password reset token cannot be blank.');
+            throw new InvalidParamException(Yii::t('app.f12.user', 'Password reset token cannot be blank.'));
         }
         $this->_user = UserQuery::findByPasswordResetToken($token);
         if (!$this->_user) {
-            throw new InvalidParamException('Wrong password reset token.');
+            throw new InvalidParamException(Yii::t('app.f12.user', 'Wrong password reset token.'));
         }
         parent::__construct($config);
     }
@@ -47,6 +47,13 @@ class ResetPasswordForm extends Model
         return [
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
+        ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'password' => Yii::t('app.f12.user', 'Password')
         ];
     }
 
