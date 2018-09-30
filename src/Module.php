@@ -25,7 +25,7 @@ class Module extends \yii\base\Module
     /**  @var bool This option adds role selector to user model form */
     public $useRbac = true;
 
-    /**  @var bool This option adds role selector to user model form */
+    /**  @var bool Allow register of new users */
     public $allowRegister = false;
 
     /**
