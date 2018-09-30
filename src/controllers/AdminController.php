@@ -5,12 +5,15 @@ namespace floor12\user\controllers;
 use floor12\editmodal\DeleteAction;
 use floor12\editmodal\EditModalAction;
 use floor12\user\logic\UserUpdate;
+use floor12\user\models\ForgetPasswordForm;
 use floor12\user\models\User;
 use floor12\user\models\UserFilter;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\web\BadRequestHttpException;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 /**
  * Created by PhpStorm.
@@ -49,6 +52,21 @@ class AdminController extends Controller
         $model->load(Yii::$app->request->get());
         return $this->render('index', ['model' => $model]);
     }
+
+
+    public function actionPasswordSend()
+    {
+        $model = User::findOne((int)Yii::$app->request->post('id'));
+
+        if (!$model)
+            throw new NotFoundHttpException('User is not found.');
+
+        if (!Yii::createObject(ForgetPasswordForm::className(), [['email' => $model->email]])->sendEmail())
+            throw new BadRequestHttpException("User is disabled.");
+
+        return Yii::t('app.f12.user', 'Email is sent.');
+    }
+
 
     public function actions()
     {

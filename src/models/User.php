@@ -24,6 +24,7 @@ use yii\web\IdentityInterface;
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
     const SCENARIO_REGISTER = 'register';
+    const SCENARIO_ADMIN = 'admin';
 
     public $password;
 
@@ -42,14 +43,14 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             [['fullname', 'email', 'phone', 'created', 'updated'], 'required'],
-            [['status', 'created', 'updated'], 'integer'],
+            [['created', 'updated'], 'integer'],
             [['fullname', 'email', 'password'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             [['password_reset_token'], 'unique'],
             ['email', 'email'],
             ['email', 'unique', 'targetClass' => self::class, 'message' => 'This email address has already been taken.'],
-            ['status', 'default', 'value' => UserStatus::STATUS_ACTIVE],
-            ['status', 'in', 'range' => [UserStatus::STATUS_ACTIVE, UserStatus::STATUS_DISABLED]],
+            ['status', 'default', 'value' => UserStatus::STATUS_ACTIVE, 'on' => self::SCENARIO_ADMIN],
+            ['status', 'in', 'range' => [UserStatus::STATUS_ACTIVE, UserStatus::STATUS_DISABLED], 'on' => self::SCENARIO_ADMIN],
             ['phone', PhoneValidator::class],
             ['phone', 'unique', 'targetClass' => self::class, 'message' => 'This phone address has already been taken.'],
             ['password', 'required', 'on' => self::SCENARIO_REGISTER]

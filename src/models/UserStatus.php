@@ -16,8 +16,10 @@ class UserStatus extends BaseEnum
     const STATUS_DISABLED = 1;
 
     public static $list = [
-        self::STATUS_ACTIVE => 'Активен',
-        self::STATUS_DISABLED => 'Выключен',
+        self::STATUS_ACTIVE => 'Active',
+        self::STATUS_DISABLED => 'Disabled',
     ];
+
+    public static $messageCategory = 'app.f12.user';
 
 }

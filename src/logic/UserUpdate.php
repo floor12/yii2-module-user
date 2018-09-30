@@ -29,6 +29,7 @@ class UserUpdate implements LogicInterface
         $this->_data = $data;
         $this->_identity = $data;
         $this->_model->updated = time();
+        $this->_model->scenario = User::SCENARIO_ADMIN;
     }
 
 
@@ -37,9 +38,11 @@ class UserUpdate implements LogicInterface
         $this->_model->load($this->_data);
 
         if ($this->_model->isNewRecord) {
+            if (!$this->_model->password)
+                $this->_model->password = Yii::$app->security->generateRandomString(8);
+
             $this->_model->created = time();
             $this->_model->generateAuthKey();
-            $this->_model->scenario = User::SCENARIO_REGISTER;
             $this->_model->on(User::EVENT_AFTER_INSERT, function ($event) {
                 Yii::$app
                     ->mailer

@@ -20,10 +20,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?php $form = ActiveForm::begin(['id' => 'reset-password-form']); ?>
 
-        <?= $form->field($model, 'password')->passwordInput(['autofocus' => true]) ?>
+        <?= $form->field($model, 'password')->label(false)->passwordInput(['autofocus' => true]) ?>
 
         <div class="form-group">
-            <?= Html::submitButton(Yii::t('app.f12.user', 'Save'), ['class' => 'btn btn-primary']) ?>
+            <?= Html::submitButton(Yii::t('app.f12.user', 'Save'), ['class' => 'btn btn-primary pull-right']) ?>
         </div>
 
         <?php ActiveForm::end(); ?>

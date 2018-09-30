@@ -53,9 +53,7 @@ class ForgetPasswordForm extends Model
 
         if (!User::isPasswordResetTokenValid($user->password_reset_token)) {
             $user->generatePasswordResetToken();
-            if (!$user->save()) {
-                return false;
-            }
+            $user->save(false, ['password_reset_token']);
         }
 
         return Yii::$app
