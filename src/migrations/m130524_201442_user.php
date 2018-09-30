@@ -1,6 +1,6 @@
 <?php
 
-use app\models\UserStatus;
+use floor12\user\models\UserStatus;
 use yii\db\Migration;
 
 class m130524_201442_user extends Migration
