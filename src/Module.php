@@ -25,6 +25,9 @@ class Module extends \yii\base\Module
     /**  @var bool This option adds role selector to user model form */
     public $useRbac = true;
 
+    /**  @var bool This option adds role selector to user model form */
+    public $allowRegister = false;
+
     /**
      * @inheritdoc
      */

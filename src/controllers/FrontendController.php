@@ -19,6 +19,7 @@ use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 
 class FrontendController extends Controller
 {
@@ -63,6 +64,9 @@ class FrontendController extends Controller
      */
     public function actionSignup()
     {
+        if (!Yii::$app->getModule('user')->allowRegister)
+            throw new ForbiddenHttpException(Yii::t('app.f12.user', 'Registrations is disabled.'));
+
         $model = new User();
 
         if (Yii::$app->request->isPost) {

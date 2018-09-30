@@ -7,8 +7,6 @@
  */
 
 return [
-    'Contacts' => 'Контакты',
-    'Menu' => 'Меню',
     'password' => 'ваш пароль',
     'sign in' => 'войти',
     'Sign in' => 'Войти',
@@ -68,5 +66,6 @@ return [
     'Disabled' => 'Выключен',
     'Any status' => 'Любой статус',
     'Search in users' => 'Поиск по пользователям',
+    'Registrations is disabled.' => 'Регистрация отключена.',
     '' => '',
 ];
