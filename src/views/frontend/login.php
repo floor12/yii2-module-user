@@ -10,7 +10,7 @@ $this->title = Yii::t('app.f12.user', 'Login');
 
 ?>
 <div class="row">
-    <div class="col-sm-4 col-sm-offset-4">
+    <div class="col-sm-6 col-sm-offset-3 col-lg-4 col-lg-offset-4">
         <h1><?= Html::encode($this->title) ?></h1>
 
         <?php $form = ActiveForm::begin(['id' => 'login-form',]); ?>

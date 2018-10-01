@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="row">
-    <div class="col-sm-4 col-sm-offset-4">
+    <div class="col-sm-6 col-sm-offset-3 col-lg-4 col-lg-offset-4">
 
         <h1><?= Html::encode($this->title) ?></h1>
 
