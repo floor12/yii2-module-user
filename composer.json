@@ -23,6 +23,7 @@
     "yiisoft/yii2": "~2.0.13",
     "yii2mod/yii2-enum": "*",
     "floor12/yii2-phone": "*",
+    "floor12/yii2-formhint": "*",
     "floor12/yii2-editmodal": "*",
     "floor12/yii2-module-files": "*"
   },
