@@ -24,8 +24,7 @@ $this->title = Yii::t('app.f12.user', 'Login');
         <?= Html::a(Yii::t('app.f12.user', 'Forgot your password?'), ['/user/frontend/forget']) ?>
         <br>
 
-        <?= Html::a(Yii::t('app.f12.user', 'Signup'), ['/user/frontend/signup']) ?>
-
+        <?= Yii::$app->getModule('user')->allowRegister ? Html::a(Yii::t('app.f12.user', 'Signup'), ['/user/frontend/signup']) : NULL ?>
 
         <?php ActiveForm::end(); ?>
 
