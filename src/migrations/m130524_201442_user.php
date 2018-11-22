@@ -15,7 +15,7 @@ class m130524_201442_user extends Migration
         $this->createTable('{{%user}}', [
             'id' => $this->primaryKey(),
             'fullname' => $this->string()->notNull()->comment('Полное имя'),
-            'auth_key' => $this->string(32)->notNull()->comment('Ключ авторизации'),
+            'auth_key' => $this->string(32)->null()->comment('Ключ авторизации'),
             'password_hash' => $this->string()->notNull()->comment('Хеш пароля'),
             'password_reset_token' => $this->string()->unique()->comment('Токен для сброса пароля'),
             'email' => $this->string()->notNull()->unique()->comment('Email'),
