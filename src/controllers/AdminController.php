@@ -46,11 +46,21 @@ class AdminController extends Controller
         ];
     }
 
+
+    /**
+     * @inheritdoc
+     */
+    public function init()
+    {
+        $this->layout = Yii::$app->getModule('user')->adminLayout;
+        parent::init();
+    }
+
     public function actionIndex()
     {
         $model = new UserFilter();
         $model->load(Yii::$app->request->get());
-        return $this->render('index', ['model' => $model]);
+        return $this->render(Yii::$app->getModule('user')->viewIndex, ['model' => $model]);
     }
 
 
@@ -75,7 +85,7 @@ class AdminController extends Controller
                 'class' => EditModalAction::class,
                 'model' => User::class,
                 'logic' => UserUpdate::class,
-                'view' => '_form',
+                'view' => Yii::$app->getModule('user')->viewForm,
                 'message' => Yii::t('app.f12.user', 'The user is saved.')
             ],
             'delete' => [

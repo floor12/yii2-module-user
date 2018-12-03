@@ -57,6 +57,16 @@ class UserUpdate implements LogicInterface
             });
         }
 
+        if (Yii::$app->getModule('user')->useRbac)
+            $this->_model->on(User::EVENT_AFTER_UPDATE, function ($event) {
+                Yii::$app->authManager->revokeAll($this->_model->id);
+                if ($this->_model->permission_ids)
+                    foreach ($this->_model->permission_ids as $item) {
+                        $r = Yii::$app->authManager->getRole($item);
+                        Yii::$app->authManager->assign($r, $this->_model->id);
+                    }
+            });
+
         if ($this->_model->password)
             $this->_model->setPassword($this->_model->password);
 

@@ -20,6 +20,8 @@ use yii\web\IdentityInterface;
  * @property int $status Статус
  * @property int $created Создан
  * @property int $updated Обновлен
+ * @property array $permissions Роли и пермишены
+ * @property array $permission_ids Роли и пермишены для работы в формах
  */
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
@@ -27,6 +29,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     const SCENARIO_ADMIN = 'admin';
 
     public $password;
+
+    public $permission_ids = [];
 
     /**
      * {@inheritdoc}
@@ -50,11 +54,18 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             ['email', 'email'],
             ['email', 'unique', 'targetClass' => self::class, 'message' => 'This email address has already been taken.'],
             ['status', 'default', 'value' => UserStatus::STATUS_ACTIVE, 'on' => self::SCENARIO_ADMIN],
+            ['permission_ids', 'safe', 'on' => self::SCENARIO_ADMIN],
             ['status', 'in', 'range' => [UserStatus::STATUS_ACTIVE, UserStatus::STATUS_DISABLED], 'on' => self::SCENARIO_ADMIN],
             ['phone', PhoneValidator::class],
             ['phone', 'unique', 'targetClass' => self::class, 'message' => 'This phone address has already been taken.'],
             ['password', 'required', 'on' => self::SCENARIO_REGISTER]
         ];
+    }
+
+    public function afterFind()
+    {
+        $this->permission_ids = $this->permissions;
+        parent::afterFind();
     }
 
     /**
@@ -71,6 +82,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'status' => Yii::t('app.f12.user', 'Status'),
             'created' => Yii::t('app.f12.user', 'Created'),
             'updated' => Yii::t('app.f12.user', 'Updated'),
+            'permission_ids' => Yii::t('app.f12.user', 'Permissions'),
         ];
     }
 
@@ -185,6 +197,20 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    /**
+     * @return array
+     */
+    public function getPermissions()
+    {
+        if (!Yii::$app->getModule('user')->useRbac)
+            return [];
+
+        return array_map(function ($permission) {
+            return $permission->name;
+        }, Yii::$app->authManager->getRolesByUser($this->id));
+
     }
 
 }

@@ -10,6 +10,13 @@ namespace floor12\user\models;
  */
 class UserQuery extends \yii\db\ActiveQuery
 {
+    public function forDropDown()
+    {
+        return $this->select('fullname')
+            ->indexBy('id')
+            ->column();
+    }
+
     /**
      * @return UserQuery
      */

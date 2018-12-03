@@ -28,6 +28,12 @@ class Module extends \yii\base\Module
     /**  @var bool Allow register of new users */
     public $allowRegister = false;
 
+    public $adminLayout = 'main';
+
+
+    public $viewIndex = '@vendor/floor12/yii2-module-user/src/views/admin/index';
+    public $viewForm = '@vendor/floor12/yii2-module-user/src/views/admin/_form';
+
     /**
      * @inheritdoc
      */

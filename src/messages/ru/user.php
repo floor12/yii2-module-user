@@ -67,5 +67,6 @@ return [
     'Any status' => 'Любой статус',
     'Search in users' => 'Поиск по пользователям',
     'Registrations is disabled.' => 'Регистрация отключена.',
+    'Permissions' => 'Доступы',
     '' => '',
 ];

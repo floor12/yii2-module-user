@@ -7,15 +7,12 @@
  *
  * @var \common\models\User $model
  * @var \yii\web\View $this
- * @var $companies array
- * @var $offices array
- * @var $projects array
- * @var $workplaces array
- * @var $departments array
  *
  */
 
 use floor12\user\models\UserStatus;
+use kartik\select2\Select2;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\widgets\MaskedInput;
@@ -36,7 +33,7 @@ $form = ActiveForm::begin([
             <?= $form->field($model, 'fullname') ?>
         </div>
         <div class="col-md-3">
-            <?= $form->field($model, 'status')->dropDownList(UserStatus::$list) ?>
+            <?= $form->field($model, 'status')->dropDownList(UserStatus::listData()) ?>
         </div>
     </div>
 
@@ -52,13 +49,25 @@ $form = ActiveForm::begin([
         </div>
     </div>
 
+    <?php if (Yii::$app->getModule('user')->useRbac) {
+        echo $form->field($model, 'permission_ids')->widget(Select2::class, [
+            'theme' => Select2::THEME_KRAJEE_BS4,
+            'data' => ArrayHelper::map(\Yii::$app->authManager->getRoles(), 'name', 'description'),
+            'language' => 'ru',
+            'pluginOptions' => [
+                'multiple' => true,
+                'allowClear' => true
+            ],
+        ]);
+    } ?>
+
 
 </div>
 
 
 <div class="modal-footer">
     <?= Html::a('Отмена', '', ['class' => 'btn btn-default modaledit-disable']) ?>
-    <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить', ['class' => 'btn btn-primary']) ?>
+    <?= Html::submitButton(Yii::t('app.f12.user', 'Save'), ['class' => 'btn btn-primary']) ?>
 </div>
 
 <?php ActiveForm::end(); ?>
