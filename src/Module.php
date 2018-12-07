@@ -23,7 +23,7 @@ class Module extends \yii\base\Module
     public $userAgreementUrl = '';
 
     /**  @var bool This option adds role selector to user model form */
-    public $useRbac = true;
+    public $useRbac = false;
 
     /**  @var bool Allow register of new users */
     public $allowRegister = false;
