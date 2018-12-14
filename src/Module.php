@@ -8,6 +8,8 @@
 
 namespace floor12\user;
 
+use floor12\user\logic\UserRegister;
+use floor12\user\models\User;
 use Yii;
 
 class Module extends \yii\base\Module
@@ -28,11 +30,22 @@ class Module extends \yii\base\Module
     /**  @var bool Allow register of new users */
     public $allowRegister = false;
 
-    public $adminLayout = 'main';
+    /**
+     * @var string
+     */
+    public $userModel = User::class;
 
+    public $signUpLogic = UserRegister::class;
+
+    public $adminLayout = 'main';
 
     public $viewIndex = '@vendor/floor12/yii2-module-user/src/views/admin/index';
     public $viewForm = '@vendor/floor12/yii2-module-user/src/views/admin/_form';
+    public $viewSignup = '@vendor/floor12/yii2-module-user/src/views/frontend/signup';
+    public $viewLogin = '@vendor/floor12/yii2-module-user/src/views/frontend/login';
+    public $viewResetPassword = '@vendor/floor12/yii2-module-user/src/views/frontend/resetPassword';
+    public $viewForgetPassword = '@vendor/floor12/yii2-module-user/src/views/frontend/forgetPassword';
+
 
     /**
      * @inheritdoc

@@ -14,8 +14,8 @@ use yii\web\BadRequestHttpException;
 
 class UserRegister
 {
-    private $_model;
-    private $_data;
+    protected $_model;
+    protected $_data;
 
     public function __construct(User $model, array $data)
     {

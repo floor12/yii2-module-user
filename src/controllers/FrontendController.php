@@ -14,7 +14,6 @@ use floor12\user\logic\UserRegister;
 use floor12\user\models\ForgetPasswordForm;
 use floor12\user\models\LoginForm;
 use floor12\user\models\ResetPasswordForm;
-use floor12\user\models\User;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -41,7 +40,7 @@ class FrontendController extends Controller
 
         $model->password = '';
 
-        return $this->render('login', [
+        return $this->render(Yii::$app->getModule('user')->viewLogin, [
             'model' => $model,
         ]);
     }
@@ -67,11 +66,11 @@ class FrontendController extends Controller
         if (!Yii::$app->getModule('user')->allowRegister)
             throw new ForbiddenHttpException(Yii::t('app.f12.user', 'Registrations is disabled.'));
 
-        $model = new User();
+        $model = Yii::createObject(Yii::$app->getModule('user')->userModel);
 
         if (Yii::$app->request->isPost) {
             Fprotector::check('User');
-            if (Yii::createObject(UserRegister::class, [$model, Yii::$app->request->post()])->execute()) {
+            if (Yii::createObject(Yii::$app->getModule('user')->signUpLogic, [$model, Yii::$app->request->post()])->execute()) {
                 Yii::$app->user->login($model);
                 return $this->render('info', [
                     'h1' => Yii::t('app.f12.user', 'Success!'),
@@ -79,7 +78,7 @@ class FrontendController extends Controller
                 ]);
             }
         }
-        return $this->render('signup', ['model' => $model,]);
+        return $this->render(Yii::$app->getModule('user')->viewSignup, ['model' => $model,]);
     }
 
     /**
@@ -99,7 +98,7 @@ class FrontendController extends Controller
             ]);
         }
 
-        return $this->render('forgetPassword', [
+        return $this->render(Yii::$app->getModule('user')->viewForgetPassword, [
             'model' => $model,
         ]);
     }
@@ -127,7 +126,7 @@ class FrontendController extends Controller
             ]);
         }
 
-        return $this->render('resetPassword', [
+        return $this->render(Yii::$app->getModule('user')->viewResetPassword, [
             'model' => $model,
         ]);
     }

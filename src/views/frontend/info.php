@@ -13,7 +13,7 @@
 
 ?>
 
-<div class="f12-info-conten">
+<div class="f12-info-content">
     <h1><?= $h1 ?></h1>
     <p><?= $text ?></p>
 </div>
