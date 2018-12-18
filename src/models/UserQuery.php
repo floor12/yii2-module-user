@@ -2,6 +2,7 @@
 
 namespace floor12\user\models;
 
+use Yii;
 
 /**
  * This is the ActiveQuery class for [[User]].
@@ -50,16 +51,16 @@ class UserQuery extends \yii\db\ActiveQuery
      */
     public static function findByEmail($email)
     {
-        return User::findOne(['email' => $email, 'status' => UserStatus::STATUS_ACTIVE]);
+        return Yii::$app->getModule('user')->userModel::findOne(['email' => $email, 'status' => UserStatus::STATUS_ACTIVE]);
     }
 
     public static function findByPasswordResetToken($token)
     {
-        if (!User::isPasswordResetTokenValid($token)) {
+        if (!Yii::$app->getModule('user')->userModel::isPasswordResetTokenValid($token)) {
             return null;
         }
 
-        return User::findOne([
+        return Yii::$app->getModule('user')->userModel::findOne([
             'password_reset_token' => $token,
             'status' => UserStatus::STATUS_ACTIVE,
         ]);

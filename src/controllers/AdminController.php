@@ -83,14 +83,14 @@ class AdminController extends Controller
         return [
             'form' => [
                 'class' => EditModalAction::class,
-                'model' => User::class,
+                'model' => Yii::$app->getModule('user')->userModel,
                 'logic' => UserUpdate::class,
                 'view' => Yii::$app->getModule('user')->viewForm,
                 'message' => Yii::t('app.f12.user', 'The user is saved.')
             ],
             'delete' => [
                 'class' => DeleteAction::class,
-                'model' => User::class,
+                'model' => Yii::$app->getModule('user')->userModel,
                 'message' => Yii::t('app.f12.user', 'The user is deleted.')
             ],
         ];

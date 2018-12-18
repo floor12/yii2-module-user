@@ -23,7 +23,7 @@ class ForgetPasswordForm extends Model
             ['email', 'required'],
             ['email', 'email'],
             ['email', 'exist',
-                'targetClass' => User::class,
+                'targetClass' => Yii::$app->getModule('user')->userModel,
                 'filter' => ['status' => UserStatus::STATUS_ACTIVE],
                 'message' => Yii::t('app.f12.user', 'There is no user with this email address.')
             ],
@@ -42,7 +42,7 @@ class ForgetPasswordForm extends Model
             return false;
 
         /* @var $user User */
-        $user = User::findOne([
+        $user = Yii::$app->getModule('user')->userModel::findOne([
             'status' => UserStatus::STATUS_ACTIVE,
             'email' => $this->email,
         ]);
@@ -51,7 +51,7 @@ class ForgetPasswordForm extends Model
             return false;
         }
 
-        if (!User::isPasswordResetTokenValid($user->password_reset_token)) {
+        if (!Yii::$app->getModule('user')->userModel::isPasswordResetTokenValid($user->password_reset_token)) {
             $user->generatePasswordResetToken();
             $user->save(false, ['password_reset_token']);
         }

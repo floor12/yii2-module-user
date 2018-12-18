@@ -52,12 +52,12 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             [['auth_key'], 'string', 'max' => 32],
             [['password_reset_token'], 'unique'],
             ['email', 'email'],
-            ['email', 'unique', 'targetClass' => self::class, 'message' => 'This email address has already been taken.'],
+            ['email', 'unique', 'targetClass' => Yii::$app->getModule('user')->userModel, 'message' => 'This email address has already been taken.'],
             ['status', 'default', 'value' => UserStatus::STATUS_ACTIVE, 'on' => self::SCENARIO_ADMIN],
             ['permission_ids', 'safe', 'on' => self::SCENARIO_ADMIN],
             ['status', 'in', 'range' => [UserStatus::STATUS_ACTIVE, UserStatus::STATUS_DISABLED], 'on' => self::SCENARIO_ADMIN],
             ['phone', PhoneValidator::class],
-            ['phone', 'unique', 'targetClass' => self::class, 'message' => 'This phone address has already been taken.'],
+            ['phone', 'unique', 'targetClass' => Yii::$app->getModule('user')->userModel, 'message' => 'This phone address has already been taken.'],
             ['password', 'required', 'on' => self::SCENARIO_REGISTER]
         ];
     }
