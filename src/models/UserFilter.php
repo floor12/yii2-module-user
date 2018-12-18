@@ -9,32 +9,46 @@
 namespace floor12\user\models;
 
 
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\web\BadRequestHttpException;
 
 class UserFilter extends Model
 {
     public $filter;
+    public $role;
     public $status;
 
     public function rules()
     {
         return [
-            ['filter', 'string'],
+            [['filter', 'role'], 'string'],
             ['status', 'integer'],
         ];
     }
 
     public function dataProvider()
     {
+        if (!$this->validate())
+            throw new BadRequestHttpException('Filter model validation error.');
+
+        $query = User::find()
+            ->andFilterWhere(['=', 'status', $this->status])
+            ->andFilterWhere(['OR',
+                ['LIKE', 'fullname', $this->filter],
+                ['LIKE', 'email', $this->filter],
+                ['LIKE', 'phone', $this->filter],
+            ]);
+
+        if ($this->role) {
+            $role_ids = Yii::$app->authManager->getUserIdsByRole($this->role);
+            $query->andWhere(['IN', 'id', $role_ids]);
+
+        }
+
         return new ActiveDataProvider([
-            'query' => User::find()
-                ->andFilterWhere(['=', 'status', $this->status])
-                ->andFilterWhere(['OR',
-                    ['LIKE', 'fullname', $this->filter],
-                    ['LIKE', 'email', $this->filter],
-                    ['LIKE', 'phone', $this->filter],
-                ])
+            'query' => $query
         ]);
     }
 }

@@ -46,9 +46,26 @@ $this->title = Yii::t('app.f12.user', 'Users');
 ]); ?>
     <div class="filter-block">
         <div class="row">
-            <div class="col-md-10">
-                <?= $form->field($model, 'filter')->label(false)->textInput(['placeholder' => Yii::t('app.f12.user', 'Search in users'), 'autofocus' => true]) ?>
-            </div>
+
+            <?php if (Yii::$app->getModule('user')->useRbac): ?>
+                <div class="col-md-7">
+                    <?= $form->field($model, 'filter')->label(false)->textInput(['placeholder' => Yii::t('app.f12.user', 'Search in users'), 'autofocus' => true]) ?>
+                </div>
+                <div class="col-md-3">
+                    <?= $form->field($model, 'role')
+                        ->label(false)
+                        ->dropDownList(
+                            array_map(function ($role) {
+                                return $role->description;
+                            }, Yii::$app->authManager->getRoles()),
+                            ['prompt' => Yii::t('app.f12.user', 'All roles'),])
+                    ?>
+                </div>
+            <?php else: ?>
+                <div class="col-md-10">
+                    <?= $form->field($model, 'filter')->label(false)->textInput(['placeholder' => Yii::t('app.f12.user', 'Search in users'), 'autofocus' => true]) ?>
+                </div>
+            <?php endif; ?>
 
 
             <div class="col-md-2">

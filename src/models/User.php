@@ -82,7 +82,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'status' => Yii::t('app.f12.user', 'Status'),
             'created' => Yii::t('app.f12.user', 'Created'),
             'updated' => Yii::t('app.f12.user', 'Updated'),
-            'permission_ids' => Yii::t('app.f12.user', 'Permissions'),
+            'permission_ids' => Yii::t('app.f12.user', 'User roles'),
         ];
     }
 

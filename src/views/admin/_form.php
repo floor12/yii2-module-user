@@ -51,7 +51,6 @@ $form = ActiveForm::begin([
 
     <?php if (Yii::$app->getModule('user')->useRbac) {
         echo $form->field($model, 'permission_ids')->widget(Select2::class, [
-            'theme' => Select2::THEME_KRAJEE_BS4,
             'data' => ArrayHelper::map(\Yii::$app->authManager->getRoles(), 'name', 'description'),
             'language' => 'ru',
             'pluginOptions' => [
