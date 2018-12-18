@@ -37,7 +37,7 @@ class Module extends \yii\base\Module
 
     public $signUpLogic = UserRegister::class;
 
-    public $adminLayout = 'main';
+    public $adminLayout = '@app/views/layouts/main';
 
     public $viewIndex = '@vendor/floor12/yii2-module-user/src/views/admin/index';
     public $viewForm = '@vendor/floor12/yii2-module-user/src/views/admin/_form';
