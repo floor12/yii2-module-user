@@ -33,7 +33,8 @@ class UserFilter extends Model
         if (!$this->validate())
             throw new BadRequestHttpException('Filter model validation error.');
 
-        $query = User::find()
+        $classname = Yii::$app->getModule('user')->userModel;
+        $query = $classname::find()
             ->andFilterWhere(['=', 'status', $this->status])
             ->andFilterWhere(['OR',
                 ['LIKE', 'fullname', $this->filter],
