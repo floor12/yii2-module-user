@@ -92,6 +92,23 @@ echo GridView::widget([
         'fullname',
         'email:email',
         [
+            'content' => function (User $model) {
+                if (Yii::$app->getModule('user')->useRbac) {
+                    $roles = Yii::$app->authManager->getRolesByUser($model->id);
+
+                    if (!$roles)
+                        return;
+
+                    $rolesHtml = array_map(function (\yii\rbac\Role $role) {
+                        return Html::tag('span', $role->description, ['class' => 'role_tag']);
+                    }, $roles);
+
+                    return implode(' ', $rolesHtml);
+                }
+                return;
+            }
+        ],
+        [
             'attribute' => 'phone',
             'content' => function (User $model) {
                 return PhoneFormatter::run($model->phone);
