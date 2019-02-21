@@ -50,27 +50,42 @@ class UserUpdate implements LogicInterface
                         ['html' => "@vendor/floor12/yii2-module-user/src/mail/user-registration-success-html.php"],
                         ['user' => $this->_model]
                     )
-                    ->setFrom([Yii::$app->params['no-replayEmail'] => Yii::$app->params['no-replayName']])
+                    ->setFrom([Yii::$app->params['no-replyEmail'] => Yii::$app->params['no-replyName']])
                     ->setSubject(Yii::t('app.f12.user', 'You credentials'))
                     ->setTo($this->_model->email)
                     ->send();
             });
         }
 
-        if (Yii::$app->getModule('user')->useRbac)
-            $this->_model->on(User::EVENT_AFTER_UPDATE, function ($event) {
-                Yii::$app->authManager->revokeAll($this->_model->id);
-                if ($this->_model->permission_ids)
-                    foreach ($this->_model->permission_ids as $item) {
-                        $r = Yii::$app->authManager->getRole($item);
-                        Yii::$app->authManager->assign($r, $this->_model->id);
-                    }
-            });
+        $this->_model->on(User::EVENT_AFTER_UPDATE, function ($event) {
+            $this->updateRoles();
+        });
+
+        $this->_model->on(User::EVENT_AFTER_INSERT, function ($event) {
+            $this->updateRoles();
+        });
 
         if ($this->_model->password)
             $this->_model->setPassword($this->_model->password);
 
         return $this->_model->save();
+    }
+
+    /**
+     * @throws \Exception
+     */
+    protected function updateRoles()
+    {
+        if (!Yii::$app->getModule('user')->useRbac)
+            return;
+
+        Yii::$app->authManager->revokeAll($this->_model->id);
+
+        if ($this->_model->permission_ids)
+            foreach ($this->_model->permission_ids as $item) {
+                $r = Yii::$app->authManager->getRole($item);
+                Yii::$app->authManager->assign($r, $this->_model->id);
+            }
     }
 
 }
