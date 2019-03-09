@@ -11,12 +11,12 @@
  */
 
 use floor12\editmodal\EditModalHelper;
+use floor12\editmodal\IconHelper;
 use floor12\phone\PhoneFormatter;
 use floor12\user\assets\UserAsset;
 use floor12\user\models\User;
 use floor12\user\models\UserFilter;
 use floor12\user\models\UserStatus;
-use rmrevin\yii\fontawesome\FontAwesome;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\web\View;
@@ -32,7 +32,7 @@ $this->title = Yii::t('app.f12.user', 'Users');
 
 ?>
 
-<?= Html::a(FontAwesome::icon('plus') . ' ' . Yii::t('app.f12.user', 'Add user'), null, [
+<?= Html::a(IconHelper::PLUS . ' ' . Yii::t('app.f12.user', 'Add user'), null, [
     'onclick' => EditModalHelper::showForm(['/user/admin/form'], 0),
     'class' => 'btn btn-primary btn-sm pull-right'
 ]) ?>
@@ -123,19 +123,19 @@ echo GridView::widget([
         ['contentOptions' => ['style' => 'min-width:100px;', 'class' => 'text-right'],
             'content' => function (User $model) {
 
-                $html = Html::a(FontAwesome::icon('key'), NULL, [
+                $html = Html::a(\floor12\user\assets\IconHelper::SEND, NULL, [
                         'title' => Yii::t('app.f12.user', 'Send password reset link'),
                         'onclick' => "f12user.sendPasswordLink($model->id)",
                         'class' => 'btn btn-default btn-sm'])
                     . ' ';
 
-                $html .= Html::a(FontAwesome::icon('pencil'), NULL, [
+                $html .= Html::a(IconHelper::PENCIL, NULL, [
                         'title' => Yii::t('app.f12.user', 'Edit user'),
                         'onclick' => EditModalHelper::showForm(['/user/admin/form'], $model->id),
                         'class' => 'btn btn-default btn-sm'])
                     . ' ';
 
-                $html .= Html::a(FontAwesome::icon('trash'), NULL, [
+                $html .= Html::a(IconHelper::TRASH, NULL, [
                         'title' => Yii::t('app.f12.user', 'Delete user'),
                         'onclick' => EditModalHelper::deleteItem(['/user/admin/delete'], $model->id),
                         'class' => 'btn btn-default btn-sm'
