@@ -65,7 +65,7 @@ class ForgetPasswordForm extends Model
                     'resetLink' => Yii::$app->urlManager->createAbsoluteUrl(['/user/frontend/reset-password', 'token' => $user->password_reset_token])
                 ]
             )
-            ->setFrom([Yii::$app->params['no-replayEmail'] => Yii::$app->params['no-replayName']])
+            ->setFrom([Yii::$app->params['no-replyEmail'] => Yii::$app->params['no-replyName']])
             ->setSubject(Yii::t('app.f12.user', 'Password reset link'))
             ->setTo($user->email)
             ->send();

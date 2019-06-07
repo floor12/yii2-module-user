@@ -14,7 +14,7 @@ use Yii;
 use yii\db\ActiveRecordInterface;
 use yii\web\IdentityInterface;
 
-class UserUpdate implements LogicInterface
+class UserUpdate implements Lo
 {
     private $_model;
     private $_data;

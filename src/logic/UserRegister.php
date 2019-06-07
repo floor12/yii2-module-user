@@ -44,7 +44,7 @@ class UserRegister
                     ['html' => "@vendor/floor12/yii2-module-user/src/mail/user-registration-success-html.php"],
                     ['user' => $this->_model]
                 )
-                ->setFrom([Yii::$app->params['no-replayEmail'] => Yii::$app->params['no-replayName']])
+                ->setFrom([Yii::$app->params['no-replyEmail'] => Yii::$app->params['no-replyName']])
                 ->setSubject(Yii::t('app.f12.user', 'You credentials'))
                 ->setTo($this->_model->email)
                 ->send();
