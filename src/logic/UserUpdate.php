@@ -8,13 +8,13 @@
 
 namespace floor12\user\logic;
 
-use floor12\editmodal\LogicInterface;
+use floor12\editmodal\LogicWithIdentityInterface;
 use floor12\user\models\User;
 use Yii;
 use yii\db\ActiveRecordInterface;
 use yii\web\IdentityInterface;
 
-class UserUpdate implements Lo
+class UserUpdate implements LogicWithIdentityInterface
 {
     private $_model;
     private $_data;

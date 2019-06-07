@@ -83,8 +83,9 @@ echo GridView::widget([
     'dataProvider' => $model->dataProvider(),
     'rowOptions' => function (User $model) {
         if ($model->status == UserStatus::STATUS_DISABLED) {
-            return ['class' => 'user-disabled'];
+            return ['class' => 'user-disabled', 'style' => 'white-space: nowrap;'];
         }
+        return ['style' => 'white-space: nowrap;'];
     },
     'tableOptions' => ['class' => 'table table-striped table-hover'],
     'columns' => [
@@ -120,7 +121,7 @@ echo GridView::widget([
                 return UserStatus::getLabel($model->status);
             }
         ],
-        ['contentOptions' => ['style' => 'min-width:100px;', 'class' => 'text-right'],
+        ['contentOptions' => ['style' => 'min-width:130px;', 'class' => 'text-right'],
             'content' => function (User $model) {
 
                 $html = Html::a(\floor12\user\assets\IconHelper::SEND, NULL, [
