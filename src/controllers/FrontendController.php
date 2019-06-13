@@ -10,7 +10,6 @@ namespace floor12\user\controllers;
 
 
 use floor12\fprotector\Fprotector;
-use floor12\user\logic\UserRegister;
 use floor12\user\models\ForgetPasswordForm;
 use floor12\user\models\LoginForm;
 use floor12\user\models\ResetPasswordForm;
@@ -35,7 +34,7 @@ class FrontendController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            return Yii::$app->getResponse()->redirect(Yii::$app->request->referrer);
         }
 
         $model->password = '';
@@ -53,7 +52,7 @@ class FrontendController extends Controller
     public function actionLogout()
     {
         Yii::$app->user->logout();
-        return $this->goHome();
+        return Yii::$app->getResponse()->redirect(Yii::$app->request->referrer);
     }
 
     /**
