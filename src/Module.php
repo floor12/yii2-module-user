@@ -10,6 +10,7 @@ namespace floor12\user;
 
 use floor12\user\logic\UserRegister;
 use floor12\user\models\User;
+use floor12\user\models\UserFilter;
 use Yii;
 
 class Module extends \yii\base\Module
@@ -38,6 +39,7 @@ class Module extends \yii\base\Module
     public $signUpLogic = UserRegister::class;
 
     public $adminLayout = '@app/views/layouts/main';
+    public $adminUserFilterClass = UserFilter::class;
 
     public $viewIndex = '@vendor/floor12/yii2-module-user/src/views/admin/index';
     public $viewForm = '@vendor/floor12/yii2-module-user/src/views/admin/_form';

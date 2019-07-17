@@ -7,7 +7,6 @@ use floor12\editmodal\EditModalAction;
 use floor12\user\logic\UserUpdate;
 use floor12\user\models\ForgetPasswordForm;
 use floor12\user\models\User;
-use floor12\user\models\UserFilter;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -24,6 +23,10 @@ use yii\web\NotFoundHttpException;
 class AdminController extends Controller
 {
 
+    /**
+     * @inheritDoc
+     * @return array
+     */
     public function behaviors()
     {
         return [
@@ -56,14 +59,23 @@ class AdminController extends Controller
         parent::init();
     }
 
+    /**
+     * @return string
+     */
     public function actionIndex()
     {
-        $model = new UserFilter();
+        $filterClassName = Yii::$app->getModule('user')->adminUserFilterClass;
+        $model = new $filterClassName;
         $model->load(Yii::$app->request->get());
         return $this->render(Yii::$app->getModule('user')->viewIndex, ['model' => $model]);
     }
 
-
+    /**
+     * @return string
+     * @throws BadRequestHttpException
+     * @throws NotFoundHttpException
+     * @throws \yii\base\InvalidConfigException
+     */
     public function actionPasswordSend()
     {
         $model = User::findOne((int)Yii::$app->request->post('id'));
@@ -78,6 +90,9 @@ class AdminController extends Controller
     }
 
 
+    /**
+     * @return array
+     */
     public function actions()
     {
         return [
