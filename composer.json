@@ -32,9 +32,7 @@
   },
   "autoload": {
     "psr-4": {
-      "floor12\\user\\": [
-        "src/"
-      ]
+      "floor12\\user\\": "src"
     }
   },
   "autoload-dev": {
