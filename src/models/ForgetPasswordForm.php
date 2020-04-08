@@ -4,6 +4,7 @@ namespace floor12\user\models;
 
 use Yii;
 use yii\base\Model;
+use yii\web\BadRequestHttpException;
 
 /**
  * Password reset request form
@@ -56,7 +57,7 @@ class ForgetPasswordForm extends Model
             $user->save(false, ['password_reset_token']);
         }
 
-        return Yii::$app
+        $emailSend = Yii::$app
             ->mailer
             ->compose(
                 ['html' => "@vendor/floor12/yii2-module-user/src/mail/user-password-reset-link.php"],
@@ -69,5 +70,10 @@ class ForgetPasswordForm extends Model
             ->setSubject(Yii::t('app.f12.user', 'Password reset link'))
             ->setTo($user->email)
             ->send();
+
+        if (!$emailSend)
+            throw new BadRequestHttpException('Mail service error. Please contact administator.');
+
+        return true;
     }
 }

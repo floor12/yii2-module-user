@@ -35,12 +35,20 @@ class Module extends \yii\base\Module
      * @var string
      */
     public $userModel = User::class;
-
+    /**
+     * @var string
+     */
     public $signUpLogic = UserRegister::class;
-
-    public $adminLayout = '@app/views/layouts/main';
+    /**
+     * @var string
+     */
     public $adminUserFilterClass = UserFilter::class;
 
+    /**
+     * Layouts and views
+     */
+    public $adminLayout = '@app/views/layouts/main';
+    public $frontendLayout = '@app/views/layouts/main';
     public $viewIndex = '@vendor/floor12/yii2-module-user/src/views/admin/index';
     public $viewForm = '@vendor/floor12/yii2-module-user/src/views/admin/_form';
     public $viewSignup = '@vendor/floor12/yii2-module-user/src/views/frontend/signup';

@@ -13,6 +13,7 @@ use floor12\fprotector\Fprotector;
 use floor12\user\models\ForgetPasswordForm;
 use floor12\user\models\LoginForm;
 use floor12\user\models\ResetPasswordForm;
+use floor12\user\Module;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -21,6 +22,21 @@ use yii\web\ForbiddenHttpException;
 
 class FrontendController extends Controller
 {
+    /**
+     * @var Module
+     */
+    protected $userModule;
+
+    /**
+     * @inheritDoc
+     */
+    public function init()
+    {
+        $this->userModule = Yii::$app->getModule('user');
+        $this->layout = $this->userModule->frontendLayout;
+        parent::init();
+    }
+
     /**
      * Login action.
      *
@@ -39,7 +55,7 @@ class FrontendController extends Controller
 
         $model->password = '';
 
-        return $this->render(Yii::$app->getModule('user')->viewLogin, [
+        return $this->render($this->userModule->viewLogin, [
             'model' => $model,
         ]);
     }
@@ -62,14 +78,14 @@ class FrontendController extends Controller
      */
     public function actionSignup()
     {
-        if (!Yii::$app->getModule('user')->allowRegister)
+        if (!$this->userModule->allowRegister)
             throw new ForbiddenHttpException(Yii::t('app.f12.user', 'Registrations is disabled.'));
 
-        $model = Yii::createObject(Yii::$app->getModule('user')->userModel);
+        $model = Yii::createObject($this->userModule->userModel);
 
         if (Yii::$app->request->isPost) {
             Fprotector::check('User');
-            if (Yii::createObject(Yii::$app->getModule('user')->signUpLogic, [$model, Yii::$app->request->post()])->execute()) {
+            if (Yii::createObject($this->userModule->signUpLogic, [$model, Yii::$app->request->post()])->execute()) {
                 Yii::$app->user->login($model);
                 return $this->render('info', [
                     'h1' => Yii::t('app.f12.user', 'Success!'),
@@ -77,7 +93,7 @@ class FrontendController extends Controller
                 ]);
             }
         }
-        return $this->render(Yii::$app->getModule('user')->viewSignup, ['model' => $model,]);
+        return $this->render($this->userModule->viewSignup, ['model' => $model,]);
     }
 
     /**
@@ -97,7 +113,7 @@ class FrontendController extends Controller
             ]);
         }
 
-        return $this->render(Yii::$app->getModule('user')->viewForgetPassword, [
+        return $this->render($this->userModule->viewForgetPassword, [
             'model' => $model,
         ]);
     }
@@ -125,7 +141,7 @@ class FrontendController extends Controller
             ]);
         }
 
-        return $this->render(Yii::$app->getModule('user')->viewResetPassword, [
+        return $this->render($this->userModule->viewResetPassword, [
             'model' => $model,
         ]);
     }

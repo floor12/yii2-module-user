@@ -69,6 +69,6 @@ return [
     'Registrations is disabled.' => 'Регистрация отключена.',
     'User roles' => 'Роли пользователя',
     'All roles' => 'Все роли',
-    '' => '',
+    'Register' => 'Зарегистрироваться',
     '' => '',
 ];
