@@ -49,7 +49,8 @@ class UserFilter extends Model
         }
 
         return new ActiveDataProvider([
-            'query' => $query
+            'query' => $query,
+            'sort' => ['defaultOrder' => ['id' => SORT_DESC]]
         ]);
     }
 }
