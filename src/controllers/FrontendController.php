@@ -50,7 +50,8 @@ class FrontendController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return Yii::$app->getResponse()->redirect(Yii::$app->request->referrer);
+            $afterLoginUrl = $this->userModule->afterLoginUrl ?: Yii::$app->request->referrer;
+            return Yii::$app->getResponse()->redirect($afterLoginUrl);
         }
 
         $model->password = '';

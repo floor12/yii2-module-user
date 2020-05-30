@@ -30,7 +30,10 @@ class Module extends \yii\base\Module
 
     /**  @var bool Allow register of new users */
     public $allowRegister = false;
-
+    /**
+     * @var string
+     */
+    public $afterLoginUrl;
     /**
      * @var string
      */
