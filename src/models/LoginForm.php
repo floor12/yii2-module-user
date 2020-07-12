@@ -25,6 +25,7 @@ class LoginForm extends Model
     public function rules()
     {
         return [
+            ['email', 'trim'],
             [['email', 'password'], 'required'],
             ['email', 'email'],
             ['password', 'validatePassword'],
@@ -77,7 +78,7 @@ class LoginForm extends Model
     public function getUser()
     {
         if ($this->_user === false) {
-            $this->_user =  UserQuery::findByEmail($this->email);
+            $this->_user = UserQuery::findByEmail($this->email);
         }
 
         return $this->_user;
