@@ -85,9 +85,16 @@ class FrontendController extends Controller
         $model = Yii::createObject($this->userModule->userModel);
 
         if (Yii::$app->request->isPost) {
+
             Fprotector::check('User');
+
             if (Yii::createObject($this->userModule->signUpLogic, [$model, Yii::$app->request->post()])->execute()) {
+
                 Yii::$app->user->login($model);
+
+                if ($this->userModule->afterRegisterUrl)
+                    return $this->redirect($this->userModule->afterRegisterUrl);
+
                 return $this->render('info', [
                     'h1' => Yii::t('app.f12.user', 'Success!'),
                     'text' => Yii::t('app.f12.user', 'You have successfully registered and authorized.')

@@ -59,6 +59,7 @@ class Module extends \yii\base\Module
     public $viewResetPassword = '@vendor/floor12/yii2-module-user/src/views/frontend/resetPassword';
     public $viewForgetPassword = '@vendor/floor12/yii2-module-user/src/views/frontend/forgetPassword';
 
+    public $afterRegisterUrl = null;
 
     /**
      * @inheritdoc
