@@ -14,14 +14,12 @@ use yii\web\BadRequestHttpException;
 
 class UserRegister
 {
-    /**
-     * @var User
-     */
+    /** @var User */
     protected $_model;
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $_data;
+    /** @var bool */
+    protected $sendWelcomeEmail;
 
     /**
      * UserRegister constructor.
@@ -29,11 +27,12 @@ class UserRegister
      * @param array $data
      * @throws BadRequestHttpException
      */
-    public function __construct(User $model, array $data)
+    public function __construct(User $model, array $data, bool $sendWelcomeEmail = true)
     {
         if (!$model->isNewRecord)
             throw new BadRequestHttpException('This instance of User is already in databese.');
 
+        $this->sendWelcomeEmail = $sendWelcomeEmail;
         $this->_model = $model;
         $this->_data = $data;
 
@@ -55,9 +54,10 @@ class UserRegister
         $this->_model->setPassword($this->_model->password);
 
 
-        $this->_model->on(User::EVENT_AFTER_INSERT, function ($event) {
-            $this->sendWelcomeEmail();
-        });
+        if ($this->sendWelcomeEmail)
+            $this->_model->on(User::EVENT_AFTER_INSERT, function ($event) {
+                $this->sendWelcomeEmail();
+            });
 
 
         return $this->_model->save();

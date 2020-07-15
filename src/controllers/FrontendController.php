@@ -106,14 +106,13 @@ class FrontendController extends Controller
 
     /**
      * Requests password reset.
-     *
+     * @param string|null $email
      * @return string
      */
-    public
-    function actionForget()
+    public function actionForget($email = null)
     {
         $model = new ForgetPasswordForm();
-
+        $model->email = $email;
         if ($model->load(Yii::$app->request->post()) && $model->sendEmail()) {
             return $this->render('info', [
                 'h1' => Yii::t('app.f12.user', 'Email found.'),
