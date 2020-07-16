@@ -24,6 +24,7 @@ return [
     'Please put your message here.' => 'Оставьте ваше сообщение здесь.',
     'Cancel' => 'Отмена',
     'Send' => 'Отправить',
+    'Incorrect email or password.'=>'Неверное сочетание почты и пароля.',
     'Thank you for contact us' => 'Спасибо, что написали нам.',
     'New message from contact form' => 'Новое сообщение с сайта',
     'Go' => 'Войти',
