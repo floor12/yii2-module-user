@@ -25,6 +25,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
 
+        <div class="pull-left">
+            <?= Yii::$app->getModule('user')->allowRegister ? Html::a(Yii::t('app.f12.user', 'Signup'), ['/user/frontend/signup']) : NULL ?>
+        </div>
+
         <div class="form-group">
             <?= Html::submitButton(Yii::t('app.f12.user', 'Send'), ['class' => 'btn btn-primary pull-right']) ?>
         </div>
