@@ -15,6 +15,8 @@ return [
     'I accept the Terms of Use.' => 'Я принимаю Пользовательское соглашение.',
     'Sign the User Agreement.' => 'Подписать Пользовательское соглашение.',
     'Password' => 'Пароль',
+    'This email has already been taken.'=>'Этот адрес уже зарегистрирован.',
+    'This phone address has already been taken.'=>'Этот телефон уже зарегистрирован.',
     'Sign up' => 'Регистрация',
     'Sign out' => 'Выход',
     'Forgot your password?' => 'Забыли пароль?',
