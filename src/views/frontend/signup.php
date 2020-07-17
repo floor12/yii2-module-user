@@ -29,6 +29,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?= $form->field($model, 'password')->passwordInput() ?>
 
+        <div class="pull-left">
+            <?= Html::a(Yii::t('app.f12.user', 'Password recovery'), ['/user/frontend/forget']) ?>
+        </div>
+
         <div class="form-group">
             <?= Fprotector::checkScript('User') ?>
             <?= Html::submitButton(Yii::t('app.f12.user', 'Save'), ['class' => 'btn btn-primary pull-right', 'name' => 'login-button']) ?>

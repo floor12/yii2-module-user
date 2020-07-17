@@ -17,8 +17,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <h1><?= Html::encode($this->title) ?></h1>
 
-        <p>
-            <?= Yii::t('app.f12.user', 'Please fill out your email. <br>A link to reset password will be sent there.') ?>
+        <p class="password-recovery-info">
+            <?= Yii::t('app.f12.user', 'Enter the email address provided during registration and we will send you a link to reset your password.') ?>
         </p>
 
         <?php $form = ActiveForm::begin(); ?>
