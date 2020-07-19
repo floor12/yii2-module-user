@@ -101,7 +101,10 @@ class FrontendController extends Controller
                 ]);
             }
         }
-        return $this->render($this->userModule->viewSignup, ['model' => $model,]);
+        return $this->render($this->userModule->viewSignup, [
+            'model' => $model,
+            'userAgreementUrl' => $this->module->userAgreementUrl
+        ]);
     }
 
     /**

@@ -1,9 +1,10 @@
 <?php
-
-/* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
-
-/* @var $model User */
+/**
+ * @var $this yii\web\View
+ * @var $form yii\bootstrap\ActiveForm
+ * @var $model User
+ * @var $userAgreementUrl string
+ */
 
 use floor12\fprotector\Fprotector;
 use floor12\user\models\User;
@@ -33,10 +34,17 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Html::a(Yii::t('app.f12.user', 'Password recovery'), ['/user/frontend/forget']) ?>
         </div>
 
-        <div class="form-group">
+        <div class="form-group text-right">
             <?= Fprotector::checkScript('User') ?>
-            <?= Html::submitButton(Yii::t('app.f12.user', 'Save'), ['class' => 'btn btn-primary pull-right', 'name' => 'login-button']) ?>
+            <?= Html::submitButton(Yii::t('app.f12.user', 'Save'), ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
         </div>
+
+        <?php if ($userAgreementUrl): ?>
+            <p class="f12-user-info-block">
+                <?= Yii::t('app.f12.user', 'By completing the registration procedure, you agree to our') ?>
+                <?= Html::a(Yii::t('app.f12.user', 'personal data processing policy'), $userAgreementUrl) ?>.
+            </p>
+        <?php endif; ?>
 
         <?php ActiveForm::end(); ?>
     </div>

@@ -74,5 +74,7 @@ return [
     'All roles' => 'Все роли',
     'Register' => 'Зарегистрироваться',
     'Password recovery' => 'Восстановление доступа',
+    'By completing the registration procedure, you agree to our' => 'Проходя процедуру регистрации вы соглашаетесь с нашей',
+    'personal data processing policy' => 'политикой обработки персональных данных',
     '' => '',
 ];
