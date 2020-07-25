@@ -28,6 +28,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     const SCENARIO_REGISTER = 'register';
     const SCENARIO_ADMIN = 'admin';
 
+    const PERMISSIONS_CACHE_TIME = 300;
+
     public $password;
 
     public $permission_ids = [];
@@ -207,10 +209,35 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         if (!Yii::$app->getModule('user')->useRbac)
             return [];
 
-        return array_map(function ($permission) {
+        if (Yii::$app->has('cache') && $permissions = Yii::$app->cache->get($this->getPermissionCacheKey()))
+            return $permissions;
+
+        $permissions = array_map(function ($permission) {
             return $permission->name;
         }, Yii::$app->authManager->getRolesByUser($this->id));
-
+        if (Yii::$app->has('cache'))
+            Yii::$app->cache->set($this->getPermissionCacheKey(), $permissions, self::PERMISSIONS_CACHE_TIME);
+        return $permissions;
     }
+
+    /**
+     * @param bool $insert
+     * @param array $changedAttributes
+     */
+    public function afterSave($insert, $changedAttributes)
+    {
+        if (Yii::$app->has('cache'))
+            Yii::$app->cache->delete($this->getPermissionCacheKey());
+        parent::afterSave($insert, $changedAttributes);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getPermissionCacheKey()
+    {
+        return "user-permission-{$this->id}";
+    }
+
 
 }
