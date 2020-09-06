@@ -69,7 +69,7 @@ class FrontendController extends Controller
     public function actionLogout()
     {
         Yii::$app->user->logout();
-        return Yii::$app->getResponse()->redirect('/');
+        return Yii::$app->getResponse()->redirect(Yii::$app->request->referrer ?? '/');
     }
 
     /**
