@@ -58,6 +58,7 @@ class Module extends \yii\base\Module
     public $viewLogin = '@vendor/floor12/yii2-module-user/src/views/frontend/login';
     public $viewResetPassword = '@vendor/floor12/yii2-module-user/src/views/frontend/resetPassword';
     public $viewForgetPassword = '@vendor/floor12/yii2-module-user/src/views/frontend/forgetPassword';
+    public $viewInfo = '@vendor/floor12/yii2-module-user/src/views/frontend/info';
 
     public $afterRegisterUrl = null;
 

@@ -95,7 +95,7 @@ class FrontendController extends Controller
                 if ($this->userModule->afterRegisterUrl)
                     return $this->redirect($this->userModule->afterRegisterUrl);
 
-                return $this->render('info', [
+                return $this->render($this->userModule->viewInfo, [
                     'h1' => Yii::t('app.f12.user', 'Success!'),
                     'text' => Yii::t('app.f12.user', 'You have successfully registered and authorized.')
                 ]);
@@ -117,7 +117,7 @@ class FrontendController extends Controller
         $model = new ForgetPasswordForm();
         $model->email = $email;
         if ($model->load(Yii::$app->request->post()) && $model->sendEmail()) {
-            return $this->render('info', [
+            return $this->render($this->userModule->viewInfo, [
                 'h1' => Yii::t('app.f12.user', 'Email found.'),
                 'text' => Yii::t('app.f12.user', 'Password reset link was send to your email. Please check your mailbox.')
             ]);
@@ -145,7 +145,7 @@ class FrontendController extends Controller
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->resetPassword()) {
-            return $this->render('info', [
+            return $this->render($this->userModule->viewInfo, [
                 'h1' => Yii::t('app.f12.user', 'Password changed.'),
                 'text' => Yii::t('app.f12.user', 'You can signin with your email and new password.')
             ]);
