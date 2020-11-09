@@ -51,7 +51,18 @@ class UserQuery extends \yii\db\ActiveQuery
      */
     public static function findByEmail($email)
     {
-        return Yii::$app->getModule('user')->userModel::findOne(['email' => $email, 'status' => UserStatus::STATUS_ACTIVE]);
+        return Yii::$app->getModule('user')
+            ->userModel::findOne(['email' => $email, 'status' => UserStatus::STATUS_ACTIVE]);
+    }
+
+    /**
+     * @param $phone
+     * @return mixed
+     */
+    public static function findByPhone($phone)
+    {
+        return Yii::$app->getModule('user')
+            ->userModel::findOne(['phone' => $phone, 'status' => UserStatus::STATUS_ACTIVE]);
     }
 
     public static function findByPasswordResetToken($token)

@@ -32,6 +32,7 @@ class ConsoleController extends Controller
     public function init()
     {
         $this->userModule = Yii::$app->getModule('user');
+        parent::init();
     }
 
     public function actionAdd()

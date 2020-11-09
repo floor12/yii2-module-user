@@ -20,6 +20,7 @@ use yii\web\IdentityInterface;
  * @property int $status Статус
  * @property int $created Создан
  * @property int $updated Обновлен
+ * @property int $mindbox_id ID Mindbox
  * @property array $permissions Роли и пермишены
  * @property array $permission_ids Роли и пермишены для работы в формах
  */
