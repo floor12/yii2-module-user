@@ -39,7 +39,7 @@ class UserFilter extends Model
             ->andFilterWhere(['OR',
                 ['LIKE', 'fullname', $this->filter],
                 ['LIKE', 'email', $this->filter],
-                ['LIKE', 'phone', $this->filter],
+                ['LIKE', 'phone', $this->clearPhone($this->filter)],
             ]);
 
         if ($this->role) {
@@ -52,5 +52,10 @@ class UserFilter extends Model
             'query' => $query,
             'sort' => ['defaultOrder' => ['id' => SORT_DESC]]
         ]);
+    }
+
+    protected function clearPhone(string $value)
+    {
+        return str_replace([' ', '-', '(', ')', '_', '+'], '', trim($value));
     }
 }
