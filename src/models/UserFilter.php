@@ -13,6 +13,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use yii\web\BadRequestHttpException;
+use function PHPUnit\Framework\isNull;
 
 class UserFilter extends Model
 {
@@ -54,8 +55,11 @@ class UserFilter extends Model
         ]);
     }
 
-    protected function clearPhone(string $value)
+    protected function clearPhone(?string $value)
     {
+        if (isNull($value)) {
+            return null;
+        }
         return str_replace([' ', '-', '(', ')', '_', '+'], '', trim($value));
     }
 }
