@@ -38,6 +38,8 @@ class ForgetPasswordForm extends Model
      */
     public function sendEmail()
     {
+      
+        $this->email = mb_convert_case($this->email, MB_CASE_LOWER);
 
         if (!$this->validate())
             return false;
