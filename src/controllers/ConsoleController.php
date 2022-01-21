@@ -55,7 +55,7 @@ class ConsoleController extends Controller
     protected function readUserAttributeFromConsole(string $attribute)
     {
         do {
-            if ($this->user->errors[$attribute])
+            if (!empty($this->user->errors[$attribute]))
                 $this->stdout($this->user->errors[$attribute][0] . PHP_EOL, Console::FG_RED);
             $this->stdout("Enter user {$attribute}: " . PHP_EOL, Console::FG_GREEN);
             $this->user->{$attribute} = Console::stdin();
