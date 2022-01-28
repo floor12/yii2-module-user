@@ -76,5 +76,12 @@ return [
     'Password recovery' => 'Восстановление доступа',
     'By completing the registration procedure, you agree to our' => 'Проходя процедуру регистрации вы соглашаетесь с нашей',
     'personal data processing policy' => 'политикой обработки персональных данных',
+    'Use password' => 'Использовать пароль',
+    'User with this email is not found.' => 'Пользователь с такой почтой не найден',
+    'Email with link was sent.' => 'Ссылка для входа была отправлена на почту.',
+    'Just click the link in the email and you will logged in.' => 'Перейдите по ссылки в письме и вы будете авторизованы на сайте.',
+    'Follow the link below to login' => 'Перейдите по этой ссылки для авторизации',
+    'Your login link' => 'Ваша ссылка для входа',
     '' => '',
+
 ];

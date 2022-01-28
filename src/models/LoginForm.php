@@ -4,20 +4,22 @@ namespace floor12\user\models;
 
 use Yii;
 use yii\base\Model;
+use yii\web\BadRequestHttpException;
 
 /**
  * LoginForm is the model behind the login form.
  *
- * @property User|null $user This property is read-only.
+ * @property User|null $this->currentUser This property is read-only.
  *
  */
 class LoginForm extends Model
 {
     public $email;
     public $password;
+    public $use_password = false;
 
-    private $_user = false;
-
+    /** @var null|User */
+    private $currentUser = null;
 
     /**
      * @return array the validation rules.
@@ -26,9 +28,18 @@ class LoginForm extends Model
     {
         return [
             ['email', 'trim'],
-            [['email', 'password'], 'required'],
+            [['password'], 'required', 'when' => function (self $model) {
+                return $model->use_password;
+            }],
+            [['email'], 'required'],
             ['email', 'email'],
-            ['password', 'validatePassword'],
+            ['email', 'exist', 'targetClass' => Yii::$app->getModule('user')->userModel, 'targetAttribute' => 'email',
+                'message' => Yii::t('app.f12.user', 'User with this email is not found.')
+            ],
+            ['use_password', 'boolean'],
+            ['password', 'validatePassword', 'when' => function (self $model) {
+                return $model->use_password;
+            }],
         ];
     }
 
@@ -41,9 +52,9 @@ class LoginForm extends Model
     public function validatePassword($attribute)
     {
         if (!$this->hasErrors()) {
-            $user = $this->getUser();
+            $this->currentUser = $this->getCurrentUser();
 
-            if (!$user || !$user->validatePassword($this->password)) {
+            if (!$this->currentUser || !$this->currentUser->validatePassword($this->password)) {
                 $this->addError($attribute, Yii::t('app.f12.user', 'Incorrect email or password.'));
             }
         }
@@ -55,18 +66,54 @@ class LoginForm extends Model
      */
     public function login()
     {
-        if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), 3600 * 24 * 30);
+        $this->email = mb_convert_case($this->email, MB_CASE_LOWER);
+
+        if ($this->validate() == false) {
+            return false;
         }
+
+        if ($this->use_password) {
+            return Yii::$app->user->login($this->getCurrentUser(), 3600 * 24 * 30);
+        } else {
+            return $this->sendLoginEmail();
+        }
+
         return false;
     }
 
+    public function sendLoginEmail()
+    {
+        if (!Yii::$app->getModule('user')->userModel::isPasswordResetTokenValid($this->getCurrentUser()->password_reset_token)) {
+            $this->getCurrentUser()->generatePasswordResetToken();
+            $this->getCurrentUser()->save(false, ['password_reset_token']);
+        }
+
+        $emailSend = Yii::$app
+            ->mailer
+            ->compose(
+                ['html' => "@vendor/floor12/yii2-module-user/src/mail/user-login-link.php"],
+                [
+                    'user' => $this->getCurrentUser(),
+                    'loginLink' => Yii::$app->urlManager->createAbsoluteUrl(['/user/frontend/login-link', 'token' => $this->currentUser->password_reset_token])
+                ]
+            )
+            ->setFrom([Yii::$app->params['no-replyEmail'] => Yii::$app->params['no-replyName']])
+            ->setSubject(Yii::t('app.f12.user', 'Your login link'))
+            ->setTo($this->getCurrentUser()->email)
+            ->send();
+
+        if (!$emailSend)
+            throw new BadRequestHttpException('Mail service error. Please contact administator.');
+
+        return true;
+    }
 
     public function attributeLabels()
     {
         return [
             'email' => Yii::t('app.f12.user', 'Email'),
             'password' => Yii::t('app.f12.user', 'Password'),
+            'use_password' => Yii::t('app.f12.user', 'Use password'),
         ];
     }
 
@@ -75,12 +122,11 @@ class LoginForm extends Model
      *
      * @return User|null
      */
-    public function getUser()
+    public function getCurrentUser()
     {
-        if ($this->_user === false) {
-            $this->_user = UserQuery::findByEmail($this->email);
+        if ($this->currentUser === null) {
+            $this->currentUser = UserQuery::findByEmail($this->email);
         }
-
-        return $this->_user;
+        return $this->currentUser;
     }
 }

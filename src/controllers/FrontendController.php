@@ -13,6 +13,7 @@ use floor12\fprotector\Fprotector;
 use floor12\user\models\ForgetPasswordForm;
 use floor12\user\models\LoginForm;
 use floor12\user\models\ResetPasswordForm;
+use floor12\user\models\TokenLoginForm;
 use floor12\user\Module;
 use Yii;
 use yii\base\InvalidParamException;
@@ -50,8 +51,15 @@ class FrontendController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            $afterLoginUrl = $this->userModule->afterLoginUrl ?: Yii::$app->request->referrer;
-            return Yii::$app->getResponse()->redirect($afterLoginUrl);
+            if ($model->use_password) {
+                $afterLoginUrl = $this->userModule->afterLoginUrl ?: Yii::$app->request->referrer;
+                return Yii::$app->getResponse()->redirect($afterLoginUrl);
+            } else {
+                return $this->render($this->userModule->viewInfo, [
+                    'h1' => Yii::t('app.f12.user', 'Email with link was sent.'),
+                    'text' => Yii::t('app.f12.user', 'Just click the link in the email and you will logged in.'),
+                ]);
+            }
         }
 
         $model->password = '';
@@ -107,6 +115,18 @@ class FrontendController extends Controller
         ]);
     }
 
+    public function actionLoginLink($token)
+    {
+        try {
+            $model = new TokenLoginForm($token);
+        } catch (InvalidParamException $e) {
+            throw new BadRequestHttpException($e->getMessage());
+        }
+        $model->login();
+        $afterLoginUrl = $this->userModule->afterLoginUrl ?: Yii::$app->request->referrer;
+        return Yii::$app->getResponse()->redirect($afterLoginUrl);
+    }
+
     /**
      * Requests password reset.
      * @param string|null $email
@@ -128,6 +148,7 @@ class FrontendController extends Controller
         ]);
     }
 
+
     /**
      * Resets password.
      *
@@ -135,8 +156,7 @@ class FrontendController extends Controller
      * @return string
      * @throws BadRequestHttpException
      */
-    public
-    function actionResetPassword($token)
+    public function actionResetPassword($token)
     {
         try {
             $model = new ResetPasswordForm($token);
