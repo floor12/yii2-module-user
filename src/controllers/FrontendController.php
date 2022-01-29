@@ -50,9 +50,10 @@ class FrontendController extends Controller
         }
 
         $model = new LoginForm();
+
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             if ($model->use_password) {
-                $afterLoginUrl = $this->userModule->afterLoginUrl ?: Yii::$app->request->referrer;
+                $afterLoginUrl = Yii::$app->user->getReturnUrl($this->userModule->afterLoginUrl);
                 return Yii::$app->getResponse()->redirect($afterLoginUrl);
             } else {
                 return $this->render($this->userModule->viewInfo, [
@@ -123,7 +124,7 @@ class FrontendController extends Controller
             throw new BadRequestHttpException($e->getMessage());
         }
         $model->login();
-        $afterLoginUrl = $this->userModule->afterLoginUrl ?: Yii::$app->request->referrer;
+        $afterLoginUrl = Yii::$app->user->getReturnUrl($this->userModule->afterLoginUrl);
         return Yii::$app->getResponse()->redirect($afterLoginUrl);
     }
 
