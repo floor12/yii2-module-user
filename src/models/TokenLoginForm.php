@@ -65,7 +65,7 @@ class TokenLoginForm extends Model
     public function login()
     {
         $this->_user;
-        $this->_user->password_reset_token = '';
+        $this->_user->generatePasswordResetToken(); // changing token after login
         $this->_user->save(false, ['password_reset_token']);
         return Yii::$app->user->login($this->_user, 3600 * 24 * 30);
     }
