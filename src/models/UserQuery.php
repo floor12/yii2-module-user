@@ -13,7 +13,7 @@ class UserQuery extends \yii\db\ActiveQuery
 {
     public function forDropDown()
     {
-        return $this->select('fullname')
+        return $this->select('user.fullname')
             ->indexBy('id')
             ->column();
     }
