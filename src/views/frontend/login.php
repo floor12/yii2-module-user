@@ -13,13 +13,14 @@ $this->title = Yii::t('app.f12.user', 'Login');
 
 ?>
 <div class="row">
-    <div class="col-sm-10 col-sm-offset-1 col-lg-4 col-lg-offset-4">
+    <div class="col-sm-8 col-sm-offset-2  col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
         <h1><?= Html::encode($this->title) ?></h1>
 
         <?php $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => false]); ?>
 
         <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
 
+        <?= $form->field($model, 'use_password')->checkbox(); ?>
 
         <div id="login-password-block">
             <?= Html::a(Yii::t('app.f12.user', 'Forgot your password?'), ['/user/frontend/forget'], [
@@ -34,10 +35,6 @@ $this->title = Yii::t('app.f12.user', 'Login');
             Html::a(Yii::t('app.f12.user', 'Signup'), ['/user/frontend/signup'], [
                 'class' => 'btn btn-default'
             ]) : NULL ?>
-
-        <br>
-        <br>
-        <?= $form->field($model, 'use_password')->checkbox(); ?>
 
         <?php ActiveForm::end(); ?>
     </div>
