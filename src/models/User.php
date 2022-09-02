@@ -149,6 +149,14 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         return $this->auth_key;
     }
 
+    public function beforeSave($insert)
+    {
+        if ($this->email) {
+            $this->email = mb_convert_case($this->email, MB_CASE_LOWER);
+        }
+        return parent::beforeSave($insert);
+    }
+
     /**
      * @inheritdoc
      */

@@ -65,4 +65,17 @@ class ConsoleController extends Controller
             $this->user->setPassword($this->user->password);
     }
 
+    public function actionEmailFix()
+    {
+        foreach (User::find()->select('id')->column() as $id) {
+            $user = User::findOne($id);
+            $user->beforeSave(false);
+            try {
+                $user->save(false);
+            } catch (\Exception $e) {
+                $this->stdout($e->getMessage() . PHP_EOL, Console::FG_RED);
+            }
+        }
+    }
+
 }
