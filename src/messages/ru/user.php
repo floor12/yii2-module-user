@@ -48,7 +48,7 @@ return [
     'Password reset link' => 'Ссылка на сброс пароля',
     'Follow the link below to reset your password:' => 'Для сброса пароля перейдите по этой ссылке:',
     'Reset password' => 'Сброс пароля',
-    'Please choose your new password:' => 'Введити ваш новый пароль:',
+    'Please choose your new password:' => 'Введите ваш новый пароль:',
     'Password reset token cannot be blank.' => 'Отсутствует токен сброса пароля.',
     'Wrong password reset token.' => 'Неверный токен сброса пароля',
     'Password changed.' => 'Пароль успешно сменён.',
