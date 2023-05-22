@@ -82,4 +82,5 @@ return [
     'Just click the link in the email and you will logged in.' => 'Перейдите по ссылки в письме и вы будете авторизованы на сайте.',
     'Follow the link below to login' => 'Перейдите по этой ссылки для авторизации',
     'Your login link' => 'Ваша ссылка для входа',
+    'Login by link' => 'Вход по ссылке',
 ];

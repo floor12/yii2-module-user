@@ -82,4 +82,5 @@ return [
     'Just click the link in the email and you will logged in.' => 'Sadece e-postadaki bağlantıya tıklayın ve oturum açacaksınız.',
     'Follow the link below to login' => 'Oturum açmak için aşağıdaki bağlantıyı takip edin',
     'Your login link' => 'Giriş bağlantınız',
+    'Login by link' => 'Bağlantı ile giriş yap',
 ];

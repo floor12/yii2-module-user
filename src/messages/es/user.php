@@ -76,6 +76,8 @@ return [
     'Just click the link in the email and you will be logged in.' => 'Simplemente haz clic en el enlace del correo electrónico y iniciarás sesión.',
     'Follow the link below to login' => 'Sigue el enlace de abajo para iniciar sesión',
     'Your login link' => 'Tu enlace de inicio de sesión',
+    'Login by link' => 'Iniciar sesión a través de un enlace',
+
     '' => '',
 
 ];

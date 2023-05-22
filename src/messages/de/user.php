@@ -83,6 +83,7 @@ return [
     'Just click the link in the email and you will logged in.' => 'Klicken Sie einfach auf den Link in der E-Mail und Sie werden angemeldet.',
     'Follow the link below to login' => 'Folgen Sie dem unten stehenden Link, um sich anzumelden',
     'Your login link' => 'Ihr Anmeldelink',
+    'Login by link' => 'Anmeldung per Link',
     '' => '',
 
 ];

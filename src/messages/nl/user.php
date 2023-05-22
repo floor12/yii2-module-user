@@ -82,6 +82,7 @@ return [
     'Just click the link in the email and you will logged in.' => 'Klik gewoon op de link in de e-mail en u wordt ingelogd.',
     'Follow the link below to login' => 'Volg de onderstaande link om in te loggen',
     'Your login link' => 'Uw login link',
+    'Login by link' => 'Inloggen via koppeling',
     '' => '',
 
 ];
