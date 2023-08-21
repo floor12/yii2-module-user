@@ -92,6 +92,7 @@ class FrontendController extends Controller
             throw new ForbiddenHttpException(Yii::t('app.f12.user', 'Registrations is disabled.'));
 
         $model = Yii::createObject($this->userModule->userModel);
+        $model->setScenario($this->userModule->userModel::SCENARIO_REGISTER);
 
         if (Yii::$app->request->isPost) {
 
