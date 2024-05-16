@@ -50,6 +50,7 @@ class FrontendController extends Controller
         }
 
         $model = new LoginForm();
+        $model->use_password = Yii::$app->getModule('user')->defaultUsePassword;
 
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             if ($model->use_password) {

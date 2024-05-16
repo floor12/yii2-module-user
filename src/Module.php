@@ -47,6 +47,7 @@ class Module extends \yii\base\Module
      */
     public $adminUserFilterClass = UserFilter::class;
 
+    public $defaultUsePassword = true;
     /**
      * Layouts and views
      */
