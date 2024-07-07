@@ -9,6 +9,7 @@
 namespace floor12\user;
 
 use floor12\user\logic\UserRegister;
+use floor12\user\models\LoginForm;
 use floor12\user\models\User;
 use floor12\user\models\UserFilter;
 use Yii;
@@ -42,6 +43,8 @@ class Module extends \yii\base\Module
      * @var string
      */
     public $signUpLogic = UserRegister::class;
+
+    public $loginForm = LoginForm::class;
     /**
      * @var string
      */
