@@ -49,7 +49,7 @@ class FrontendController extends Controller
             return $this->goHome();
         }
 
-        $model = new ($this->userModule->loginForm)();
+        $model = new $this->userModule->loginForm();
         $model->use_password = Yii::$app->getModule('user')->defaultUsePassword;
 
         if ($model->load(Yii::$app->request->post()) && $model->login()) {

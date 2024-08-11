@@ -51,6 +51,8 @@ class Module extends \yii\base\Module
     public $adminUserFilterClass = UserFilter::class;
 
     public $defaultUsePassword = true;
+
+    public $allowAdminToLoginAsAnyUser = true;
     /**
      * Layouts and views
      */

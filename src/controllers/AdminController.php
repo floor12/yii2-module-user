@@ -59,6 +59,19 @@ class AdminController extends Controller
         parent::init();
     }
 
+    public function actionLogin($user_id)
+    {
+        if (!Yii::$app->getModule('user')->allowAdminToLoginAsAnyUser) {
+            throw new BadRequestHttpException('This feature is disabled.');
+        }
+        $userModel = Yii::$app->getModule('user')->userModel;
+        $user = $userModel::findOne($user_id);
+        if (!$user)
+            throw new NotFoundHttpException('User is not found.');
+        Yii::$app->user->login($user, 3600 * 24 * 30);
+        return $this->redirect('/');
+    }
+
     /**
      * @return string
      */
