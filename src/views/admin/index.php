@@ -130,6 +130,13 @@ echo GridView::widget([
                         'class' => 'btn btn-default btn-sm'])
                     . ' ';
 
+                if (Yii::$app->getModule('user')->allowAdminToLoginAsAnyUser)
+                    $html .= Html::a(\floor12\user\assets\IconHelper::LOGIN, NULL, [
+                            'title' => Yii::t('app.f12.user', 'Login as user'),
+                            'onclick' => EditModalHelper::showForm(['/user/admin/login'], ['user_id' => $model->id]),
+                            'class' => 'btn btn-default btn-sm'])
+                        . ' ';
+
                 $html .= Html::a(IconHelper::PENCIL, NULL, [
                         'title' => Yii::t('app.f12.user', 'Edit user'),
                         'onclick' => EditModalHelper::showForm(['/user/admin/form'], $model->id),
