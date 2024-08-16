@@ -77,7 +77,7 @@ return [
     'Follow the link below to login' => 'Sigue el enlace de abajo para iniciar sesión',
     'Your login link' => 'Tu enlace de inicio de sesión',
     'Login by link' => 'Iniciar sesión a través de un enlace',
-
+    'Show password' => 'Mostrar contraseña',
     '' => '',
 
 ];

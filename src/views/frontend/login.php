@@ -22,12 +22,18 @@ $this->title = Yii::t('app.f12.user', 'Login');
 
         <?= $form->field($model, 'use_password')->checkbox(); ?>
 
-        <div id="login-password-block">
+        <div id="login-password-block" style="position: relative">
             <?= Html::a(Yii::t('app.f12.user', 'Forgot your password?'), ['/user/frontend/forget'], [
                 'style' => 'float:right;'
             ]) ?>
             <?= $form->field($model, 'password')->passwordInput() ?>
+            <button class="btn-link"
+                    onclick="$('#loginform-password').attr('type','text'); $(this).hide()"
+                    type="button" style="font-size: 10px; position: absolute;  top: 37px;right: 10px;">
+                <?= Yii::t('app.f12.user', 'Show password') ?>
+            </button>
         </div>
+
 
         <?= Html::submitButton(Yii::t('app.f12.user', 'Go'), ['class' => 'btn btn-primary pull-right', 'name' => 'login-button']) ?>
 
@@ -35,7 +41,8 @@ $this->title = Yii::t('app.f12.user', 'Login');
             Html::a(Yii::t('app.f12.user', 'Signup'), ['/user/frontend/signup'], [
                 'class' => 'btn btn-default'
             ]) : NULL ?>
-
+        <br>
         <?php ActiveForm::end(); ?>
+
     </div>
 </div>

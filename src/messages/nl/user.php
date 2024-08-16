@@ -77,6 +77,7 @@ return [
     'Follow the link below to login' => 'Volg de onderstaande link om in te loggen',
     'Your login link' => 'Uw login link',
     'Login by link' => 'Inloggen via koppeling',
+    'Show password' => 'Toon wachtwoord',
     '' => '',
 
 ];

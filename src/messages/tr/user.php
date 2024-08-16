@@ -77,4 +77,5 @@ return [
     'Follow the link below to login' => 'Oturum açmak için aşağıdaki bağlantıyı takip edin',
     'Your login link' => 'Giriş bağlantınız',
     'Login by link' => 'Bağlantı ile giriş yap',
+    'Show password' => 'Parolayı göster',
 ];

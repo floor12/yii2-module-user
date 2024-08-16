@@ -77,4 +77,5 @@ return [
     'Follow the link below to login' => 'Перейдите по этой ссылки для авторизации',
     'Your login link' => 'Ваша ссылка для входа',
     'Login by link' => 'Вход по ссылке',
+    'Show password' => 'Показать пароль',
 ];

@@ -77,5 +77,6 @@ return [
     'Follow the link below to login' => 'Suivez le lien ci-dessous pour vous connecter',
     'Your login link' => 'Votre lien de connexion',
     'Login by link' => 'Connexion par lien',
+    'Show password' => 'Afficher le mot de passe',
 ];
 
