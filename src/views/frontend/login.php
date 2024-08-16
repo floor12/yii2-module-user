@@ -42,6 +42,8 @@ $this->title = Yii::t('app.f12.user', 'Login');
                 'class' => 'btn btn-default'
             ]) : NULL ?>
         <br>
+        <br>
+        <br>
         <?php ActiveForm::end(); ?>
 
     </div>
