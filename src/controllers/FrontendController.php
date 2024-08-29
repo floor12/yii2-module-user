@@ -125,7 +125,7 @@ class FrontendController extends Controller
             throw new BadRequestHttpException($e->getMessage());
         }
         $model->login();
-        if (!$afterLoginUrl) {
+        if (!$afterLoginUrl || str_contains($afterLoginUrl, 'login')) {
             $afterLoginUrl = Yii::$app->user->getReturnUrl($this->userModule->afterLoginUrl);
         }
         return Yii::$app->getResponse()->redirect($afterLoginUrl);
