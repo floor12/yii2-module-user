@@ -88,13 +88,18 @@ class LoginForm extends Model
             $this->getCurrentUser()->save(false, ['password_reset_token']);
         }
 
+        $afterLoginUrl = Yii::$app->request->referrer;
+
         $emailSend = Yii::$app
             ->mailer
             ->compose(
                 ['html' => "@vendor/floor12/yii2-module-user/src/mail/user-login-link.php"],
                 [
                     'user' => $this->getCurrentUser(),
-                    'loginLink' => Yii::$app->urlManager->createAbsoluteUrl(['/user/frontend/login-link', 'token' => $this->currentUser->password_reset_token])
+                    'loginLink' => Yii::$app->urlManager->createAbsoluteUrl(['/user/frontend/login-link',
+                        'token' => $this->currentUser->password_reset_token,
+                        'afterLoginUrl' => $afterLoginUrl ?? ''
+                    ])
                 ]
             )
             ->setFrom([Yii::$app->params['no-replyEmail'] => Yii::$app->params['no-replyName']])

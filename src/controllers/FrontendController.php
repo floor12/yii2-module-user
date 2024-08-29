@@ -11,7 +11,6 @@ namespace floor12\user\controllers;
 
 use floor12\fprotector\Fprotector;
 use floor12\user\models\ForgetPasswordForm;
-use floor12\user\models\LoginForm;
 use floor12\user\models\ResetPasswordForm;
 use floor12\user\models\TokenLoginForm;
 use floor12\user\Module;
@@ -118,7 +117,7 @@ class FrontendController extends Controller
         ]);
     }
 
-    public function actionLoginLink($token)
+    public function actionLoginLink($token, $afterLoginUrl = null)
     {
         try {
             $model = new TokenLoginForm($token);
@@ -126,7 +125,9 @@ class FrontendController extends Controller
             throw new BadRequestHttpException($e->getMessage());
         }
         $model->login();
-        $afterLoginUrl = Yii::$app->user->getReturnUrl($this->userModule->afterLoginUrl);
+        if (!$afterLoginUrl) {
+            $afterLoginUrl = Yii::$app->user->getReturnUrl($this->userModule->afterLoginUrl);
+        }
         return Yii::$app->getResponse()->redirect($afterLoginUrl);
     }
 
